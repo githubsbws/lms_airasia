@@ -56,7 +56,7 @@ Flow:
 
 ## 5. Frontend Structure (Bootstrap 5)
 
-resources/views/layouts/app.blade.php (layout หลัก)
+resources/views/layouts/mainlayout.blade.php (layout หลัก)
 resources/views/frontend/{dashboard, courses, exam, certificates, announcements, faq}
 resources/lang/{th, en}
 
