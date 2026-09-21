@@ -19,10 +19,10 @@
 | PHP Runtime | PHP 8.5 (CLI + FPM) | เครื่อง web มี PHP 7.4 / 8.3 / 8.4 / 8.5 อยู่ร่วมกัน คนละ vhost/socket |
 | Database | PostgreSQL | อยู่เครื่องแยก ต่อผ่าน network (`pdo_pgsql`), ไม่ได้ลง DB server บนเครื่อง web |
 | Web Server | Apache 2.4 + PHP-FPM (proxy_fcgi) | หลาย vhost บนเครื่องเดียว แยก socket ตาม PHP version ต่อไซต์ |
-| Admin Panel (หลังบ้าน) | **Filament PHP v5** | รองรับ Laravel 13 / PHP 8.2+ แล้ว ใช้ resource class ธรรมดา ไม่ต้องเขียน Livewire component เอง |
-| Frontend CSS (หน้าบ้าน) | **Bootstrap 5** | เลือกเพราะ learning curve ต่ำ ไม่ต้อง build step บังคับ เข้ากับพื้นฐานทีม (HTML/jQuery) ไม่ปนกับ Tailwind ที่ Filament ใช้ภายใน |
+| Admin Panel (หลังบ้าน) | **AdminLTE** (Bootstrap-based theme) | เปลี่ยนจาก Filament PHP v5 เดิม เพราะต้องคุม permission ต่อเมนูแบบ custom ตามระบบเก่า (ดูหัวข้อ Permission ด้านล่าง) ทีมเขียน CRUD/route/controller/view เอง ไม่มี resource generator ให้ |
+| Frontend CSS (หน้าบ้าน + หลังบ้าน) | **Bootstrap 5** | เลือกเพราะ learning curve ต่ำ ไม่ต้อง build step บังคับ เข้ากับพื้นฐานทีม (HTML/jQuery) ใช้ร่วมกันได้ทั้งหน้าบ้านและหลังบ้าน (AdminLTE เป็น Bootstrap-based) ไม่มี Tailwind ในโปรเจกต์ |
 | Realtime/Interactivity หน้าสอบ | **Alpine.js + Vanilla JS `fetch()`** | ทดแทน Livewire ที่ตัดออก ใช้สำหรับ timer, auto-submit, tab-switch detection |
-| Role & Permission | **spatie/laravel-permission** | ใช้เฉพาะระดับ "Role" (ไม่ทำ permission matrix ละเอียด) — เพื่อคุมเมนูที่มองเห็น + block route ที่ไม่ใช่ของ role ตัวเอง |
+| Permission (สิทธิ์การใช้งาน) | **Custom permission ผ่าน Laravel Gate (`can()`)** | ไม่ใช้ spatie/laravel-permission — คงโครงสร้างเดิมจากระบบเก่า: `tbl_admin_group` (กลุ่มสิทธิ์), `tbl_permission` (pivot group_id ↔ admin_menu_id), field `superuser` ใน users bypass ทุกอย่างไม่อิง role/group เลย เช็คผ่าน `Gate::define('menu', ...)` + custom Blade directive `@canmenu('1') ... @endcan` |
 | จัดการไฟล์สื่อ (VDO/Audio/PDF) | spatie/laravel-medialibrary | |
 | Log การใช้งานระบบ | spatie/laravel-activitylog | |
 | ใบประกาศ (PDF) | barryvdh/laravel-dompdf | |
@@ -37,7 +37,8 @@
 
 | # | ฟีเจอร์ | Phase | หมายเหตุ |
 |---|---|---|---|
-| 1 | ระบบกำหนดสิทธิ์การใช้งาน | 0 | Role-based เท่านั้น (ไม่ทำ permission ย่อย), บล็อก route ด้วย middleware, ซ่อนเมนูด้วย Blade directive |
+| 1 | ระบบกำหนดสิทธิ์การใช้งาน | 0 | Permission ต่อเมนูผ่าน `tbl_admin_group`/`tbl_permission` (ดู Tech Stack), `superuser` bypass ทั้งหมด, บล็อก route ด้วย middleware ที่เช็คผ่าน Gate เดียวกัน, ซ่อนเมนูด้วย `@canmenu()` directive |
+| 1.1 | ระบบ Idle Timeout (Auto Logout) | 0 | Middleware `checkIdleTimeout` — User 60 นาที, Admin 30 นาที (เข้มกว่าเพราะจัดการข้อมูลสมาชิก/สิทธิ์), หน้าห้องสอบไม่ whitelist แต่ fetch heartbeat นับเป็น activity เพื่อไม่ตัดตอนกำลังสอบ |
 | 2 | ระบบจัดการสมาชิก (ผู้เรียนและระบบ) | 1 | |
 | 3 | ระบบลงทะเบียนเรียน | 1 | Enrollment pivot ผูก user ↔ course |
 | 4 | ระบบจัดการระดับขั้นการเรียน (Organization Course) | 1 | ต้องออกแบบ schema hierarchical/flat ให้ชัดก่อนเริ่ม |
@@ -82,5 +83,8 @@
 
 - [ ] **SSO (ข้อ 18)** — deferred, ยังไม่ตัดสินใจ IdP
 - [ ] **5 รายงาน (ข้อ 16)** — deferred, รอ requirement จากลูกค้า
+- [ ] **Schema จริงของ Permission system (ข้อ 1)** — ต้อง confirm: column ของ `tbl_admin_group`/`tbl_permission`/`tbl_admin_menu`, ผู้ใช้ผูกกับ group แบบ 1:1 หรือ many-to-many, ชื่อ column `superuser` ที่แน่นอน (ดู design.md หัวข้อ 2)
 - [x] **ข้อ 12** — ปิดแล้ว: screen snapshot + popup attention check (ไม่ทำ webcam)
 - [x] **โครงสร้าง Organization Course (ข้อ 4)** — ปิดแล้ว: คงรูปแบบเดิมจาก Yii1 — แนบหลักสูตรที่ node → มองเห็นได้จาก node นั้น + ทุก node สายล่างทั้งหมด (ดู design.md หัวข้อ 3.1)
+- [x] **Admin Panel (ข้อ 1)** — ปิดแล้ว: เปลี่ยนจาก Filament v5 → AdminLTE เพราะต้องคุม permission ต่อเมนูแบบ custom
+- [x] **Idle Timeout (ข้อ 1.1)** — ปิดแล้ว: User 60 นาที / Admin 30 นาที, heartbeat หน้าสอบนับเป็น activity (ดู design.md หัวข้อ 2.1)
