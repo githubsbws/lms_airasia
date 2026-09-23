@@ -42,11 +42,11 @@
             {{-- Course Header --}}
             <div class="section-header">
                 <h2 class="section-title">
-                    Course
+                    {{ __('home.course_section_title') }}
                 </h2>
 
                 <a href="{{ route('course.index') }}" class="view-btn">
-                    View
+                    {{ __('home.view') }}
                 </a>
             </div>
 
@@ -56,7 +56,7 @@
                 {{-- Label --}}
                 <div class="course-label-wrapper">
                     <div class="course-label">
-                        e-Learning for staff
+                        {{ __('home.course_label') }}
                     </div>
                 </div>
 
@@ -107,11 +107,11 @@
             {{-- Documents Header --}}
             <div class="section-header">
                 <h2 class="section-title">
-                    Documents
+                    {{ __('home.documents_section_title') }}
                 </h2>
 
                 <a href="{{ route('document.index') }}" class="view-btn">
-                    View
+                    {{ __('home.view') }}
                 </a>
             </div>
 
@@ -133,7 +133,7 @@
 
                     <a href="#" class="download-btn">
                         <i class="bi bi-download"></i>
-                        Download
+                        {{ __('home.download') }}
                     </a>
 
                 </div>

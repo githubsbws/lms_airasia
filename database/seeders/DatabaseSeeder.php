@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Users;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Users::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
+        Users::factory()->create([
+            'username' => 'testuser',
             'email' => 'test@example.com',
+            'superuser' => 1, // เพื่อทดสอบ bypass permission ตาม design.md
         ]);
     }
 }
