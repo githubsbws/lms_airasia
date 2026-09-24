@@ -22,11 +22,22 @@
 
     @include('partials.header')
 
+    @if (session('idle_timeout_message'))
+        <div class="container mt-3">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ session('idle_timeout_message') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+
     <main class="flex-grow-1 d-flex flex-column">
         @yield('content')
     </main>
 
     @include('partials.footer')
+
+    @include('partials.login-modal')
 
     @stack('scripts')
 

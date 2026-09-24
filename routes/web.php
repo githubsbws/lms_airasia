@@ -1,6 +1,19 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+|
+| Login ใช้ modal เดียวที่ header (ไม่มีหน้าแยก) — เข้าหน้า admin ได้ผ่าน
+| เมนูย่อยหลัง login แล้วเท่านั้น (ดู design.md หัวข้อ 2)
+|
+*/
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +68,15 @@ Route::get('/faq', function () {
 Route::get('/contact', function () {
     return view('frontend.contact');
 })->name('contact');
+
+// สลับภาษา (th/en) — เก็บค่าไว้ใน session แล้ว redirect กลับหน้าเดิม
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['th', 'en'], true)) {
+        session(['locale' => $locale]);
+    }
+
+    return redirect()->back();
+})->name('lang.switch');
 
 /*
 |--------------------------------------------------------------------------

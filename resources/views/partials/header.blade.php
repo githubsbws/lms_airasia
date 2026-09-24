@@ -36,7 +36,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
                         href="{{ route('home') }}">
-                        Home
+                        {{ __('menu.home') }}
                     </a>
                 </li>
 
@@ -44,7 +44,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}"
                         href="{{ route('course.index') }}">
-                        Course
+                        {{ __('menu.course') }}
                     </a>
                 </li>
 
@@ -52,7 +52,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('how-to-use') ? 'active' : '' }}"
                         href="{{ route('how-to-use') }}">
-                        How to use
+                        {{ __('menu.how_to_use') }}
                     </a>
                 </li>
 
@@ -60,7 +60,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}"
                         href="{{ route('faq') }}">
-                        FAQ
+                        {{ __('menu.faq') }}
                     </a>
                 </li>
 
@@ -68,27 +68,82 @@
                     <a
                         class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
                         href="{{ route('contact') }}">
-                        Contact us
+                        {{ __('menu.contact') }}
                     </a>
                 </li>
 
             </ul>
 
-            {{-- Username --}}
-            <form class="d-flex">
+            {{-- Language Switcher --}}
+            <div class="btn-group me-3" role="group" aria-label="Language switcher">
+                <a
+                    href="{{ route('lang.switch', 'th') }}"
+                    class="btn btn-sm {{ app()->getLocale() === 'th' ? 'btn-dark' : 'btn-outline-dark' }}">
+                    TH
+                </a>
+                <a
+                    href="{{ route('lang.switch', 'en') }}"
+                    class="btn btn-sm {{ app()->getLocale() === 'en' ? 'btn-dark' : 'btn-outline-dark' }}">
+                    EN
+                </a>
+            </div>
 
-                <button type="button" class="btn btn-primary">
+            @auth
+                {{-- Username (login แล้ว) --}}
+                <div class="dropdown">
 
-                    <span>{{ auth()->user()->name ?? 'Username' }}</span>
+                    <button
+                        type="button"
+                        class="btn btn-primary dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
 
-                    <img
-                        src="{{ asset('frontend/images/users/user-1.png') }}"
-                        class="logouser rounded-circle"
-                        alt="">
+                        <span>{{ auth()->user()->username }}</span>
+
+                        <img
+                            src="{{ asset('frontend/images/users/user-1.png') }}"
+                            class="logouser rounded-circle"
+                            alt="">
+
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        @if ((int) auth()->user()->superuser === 1)
+                            <li>
+                                <a class="dropdown-item" href="{{ route('admin.home') }}">
+                                    <i class="bi bi-speedometer2 me-2"></i>
+                                    Admin
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                        @endif
+
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="bi bi-box-arrow-right me-2"></i>
+                                    {{ __('auth.logout') }}
+                                </button>
+                            </form>
+                        </li>
+
+                    </ul>
+
+                </div>
+            @else
+                {{-- ปุ่ม Login (guest) — เปิด Modal --}}
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+
+                    <span>{{ __('auth.login') }}</span>
 
                 </button>
-
-            </form>
+            @endauth
 
         </div>
     </div>
