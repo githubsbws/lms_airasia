@@ -36,7 +36,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}"
                         href="{{ route('home') }}">
-                        {{ __('menu.home') }}
+                        {{ __('home.home') }}
                     </a>
                 </li>
 
@@ -44,7 +44,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('course.*') ? 'active' : '' }}"
                         href="{{ route('course.index') }}">
-                        {{ __('menu.course') }}
+                        {{ __('home.course') }}
                     </a>
                 </li>
 
@@ -52,7 +52,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('how-to-use') ? 'active' : '' }}"
                         href="{{ route('how-to-use') }}">
-                        {{ __('menu.how_to_use') }}
+                        {{ __('home.how_to_use') }}
                     </a>
                 </li>
 
@@ -60,7 +60,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('faq') ? 'active' : '' }}"
                         href="{{ route('faq') }}">
-                        {{ __('menu.faq') }}
+                        {{ __('home.faq') }}
                     </a>
                 </li>
 
@@ -68,7 +68,7 @@
                     <a
                         class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}"
                         href="{{ route('contact') }}">
-                        {{ __('menu.contact') }}
+                        {{ __('home.contact') }}
                     </a>
                 </li>
 
