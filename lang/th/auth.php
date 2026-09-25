@@ -13,4 +13,10 @@ return [
     'submit' => 'เข้าสู่ระบบ',
     'logout' => 'ออกจากระบบ',
     'idle_timeout' => 'หมดเวลาการเชื่อมต่อ กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+    'staff_section'    => 'เข้าสู่ระบบสำหรับเจ้าหน้าที่ AirAsia',
+    'staff_button'     => 'For AirAsia Staff',
+    'outsider_section' => 'เข้าสู่ระบบสำหรับบุคคลภายนอก',
+    'outsider_button'  => 'For Non-AirAsia Staff',
+    'register'         => 'สมัครสมาชิก',
+    'forgot_password'  => 'ลืมรหัสผ่าน',
 ];

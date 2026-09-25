@@ -13,4 +13,10 @@ return [
     'submit' => 'Login',
     'logout' => 'Logout',
     'idle_timeout' => 'Your session has expired due to inactivity. Please login again.',
+    'staff_section'    => 'Login for AirAsia Staff',
+    'staff_button'     => 'For AirAsia Staff',
+    'outsider_section' => 'Login for External Users',
+    'outsider_button'  => 'For Non-AirAsia Staff',
+    'register'         => 'Register',
+    'forgot_password'  => 'Forgot Password',
 ];
