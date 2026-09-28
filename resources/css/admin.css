@@ -1,0 +1,28 @@
+/*
+ * ฝั่ง Admin (หลังบ้าน) — Bootstrap 5 + AdminLTE 4
+ * แยก entry จากหน้าบ้าน (resources/css/app.css) เพราะ AdminLTE เป็น layout
+ * เฉพาะโซน /admin เท่านั้น ไม่ต้องให้หน้าบ้านโหลด CSS ที่ไม่ได้ใช้
+ *
+ * หมายเหตุ: AdminLTE 4 build มาสำหรับ Bootstrap 5.3+ โดยเฉพาะ (peer dependency
+ * "bootstrap": "^5.3.8") ไม่มี Bootstrap เวอร์ชันอื่นปนในไฟล์นี้
+ */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'admin-lte/dist/css/adminlte.css';
+
+/*
+ * เมนูซ้ายบางรายการมีชื่อยาว (แปลจาก lang/{locale}/admin/menuleft.php)
+ * ให้ขึ้นบรรทัดใหม่แทนการตัดด้วย ... เพื่อให้อ่านครบทุกคำ
+ * เผื่อ padding-right ให้ label เสมอ กันลูกศร (.nav-arrow) ทับข้อความ
+ * ตอนชื่อยาวจนขึ้น 2 บรรทัด (ลูกศรอ้างอิงกึ่งกลางความสูงทั้งหมดของ <p>)
+ */
+.sidebar-menu .nav-link > p {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.3;
+    padding-right: 1.25rem;
+}
+
+.sidebar-menu .nav-link > p > .nav-arrow {
+    right: -0.25rem;
+}
