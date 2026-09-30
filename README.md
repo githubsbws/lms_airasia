@@ -1,4 +1,4 @@
-# ETS (e-Testing / e-Learning System)
+# ETS (E-Learning System)
 
 ระบบ LMS + e-Testing พัฒนาด้วย Laravel 13 บน PHP 8.5 เชื่อมต่อ PostgreSQL
 
@@ -20,11 +20,7 @@ composer install (หากมี php >= 2 version ต้องใช้ php8.5 
 npm install
 ```
 
-ตั้งค่าการเชื่อมต่อ PostgreSQL ใน `.env` ให้ตรงกับเครื่อง DB ที่ใช้งาน แล้วรัน migration:
-
-```powershell
-C:\php-8.5.10\php.exe artisan migrate
-```
+ตั้งค่าการเชื่อมต่อ PostgreSQL ใน `.env` ให้ตรงกับเครื่อง DB ที่ใช้งาน
 
 ## รันตอน Dev
 
