@@ -1,9 +1,14 @@
-@import 'tailwindcss';
+/*
+ * ฝั่ง User (หน้าบ้าน) — Bootstrap 5
+ * ตามที่ design.md ระบุ: หน้าบ้านใช้ Bootstrap 5 เป็นหลัก ไม่ปนกับ Tailwind
+ * (Tailwind ยังถูกใช้แยกส่วนภายใน Filament admin panel เท่านั้น)
+ */
+@import 'bootstrap/dist/css/bootstrap.min.css';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+body {
+    font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }

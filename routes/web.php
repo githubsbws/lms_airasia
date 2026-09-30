@@ -1,7 +1,94 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Authentication
+|--------------------------------------------------------------------------
+|
+| Login ใช้ modal เดียวที่ header (ไม่มีหน้าแยก) — เข้าหน้า admin ได้ผ่าน
+| เมนูย่อยหลัง login แล้วเท่านั้น (ดู design.md หัวข้อ 2)
+|
+*/
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| Frontend (ฝั่ง User)
+|--------------------------------------------------------------------------
+|
+| แปลงมาจาก lms-airasia-html/*.php (UI ที่ทีม Frontend ทำไว้)
+| ตอนนี้เป็น static view ก่อน (ยังไม่ผูก database/model จริง)
+|
+*/
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
+})->name('home');
+
+Route::get('/course', function () {
+    return view('frontend.course');
+})->name('course.index');
+
+Route::get('/course/detail', function () {
+    return view('frontend.course-detail');
+})->name('course.detail');
+
+Route::get('/course/exam', function () {
+    return view('frontend.course-exam');
+})->name('course.exam');
+
+Route::get('/final-exam', function () {
+    return view('frontend.final-exam');
+})->name('exam.final');
+
+Route::get('/exam', function () {
+    return view('frontend.exam');
+})->name('exam.test');
+
+Route::get('/result', function () {
+    return view('frontend.result');
+})->name('exam.result');
+
+Route::get('/document', function () {
+    return view('frontend.document');
+})->name('document.index');
+
+Route::get('/how-to-use', function () {
+    return view('frontend.how-to-use');
+})->name('how-to-use');
+
+Route::get('/faq', function () {
+    return view('frontend.faq');
+})->name('faq');
+
+Route::get('/contact', function () {
+    return view('frontend.contact');
+})->name('contact');
+
+// สลับภาษา (th/en) — เก็บค่าไว้ใน session แล้ว redirect กลับหน้าเดิม
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['th', 'en'], true)) {
+        session(['locale' => $locale]);
+    }
+
+    return redirect()->back();
+})->name('lang.switch');
+
+/*
+|--------------------------------------------------------------------------
+| Admin (หลังบ้าน)
+|--------------------------------------------------------------------------
+|
+| หมายเหตุ: ถ้าใช้ Filament v5 เป็น admin panel จริง route กลุ่มนี้จะถูก
+| แทนที่ด้วย Filament ที่ mount /admin เอง (ดู design.md หัวข้อ 1)
+|
+*/
+Route::prefix('admin')->group(function () {
+    Route::get('/', function () {
+        return view('admin.home');
+    })->name('admin.home');
 });
