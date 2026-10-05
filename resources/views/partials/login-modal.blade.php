@@ -34,7 +34,7 @@
                     <hr class="flex-grow-1">
                 </div>
 
-                {{-- Login ปกติ: username + password --}}
+                {{-- Login ปกติ: username/password --}}
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
@@ -84,4 +84,3 @@
         });
     </script>
 @endif
-
