@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'failed' => 'These credentials do not match our records.',
+    'failed' => 'Username or Password Incorrect.',
     'deleted' => 'This account has been deactivated. Please contact the administrator.',
     'inactive' => 'This account is inactive. Please contact the administrator.',
     'login' => 'Login',
