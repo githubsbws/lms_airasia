@@ -1,10 +1,8 @@
 @extends('admin.layouts.mainlayout')
-
-@section('title', 'Dashboard')
-
+@section('title', __('admin/menuleft.home'))
+@section('breadcrumb')
+    <li class="breadcrumb-item active" aria-current="page">{{ __('admin/menuleft.home') }}</li>
+@endsection
 @section('content')
-    <div class="container-fluid py-4">
-        <h1>Admin Dashboard</h1>
-        <p class="text-muted">หน้านี้ใช้ layout ฝั่ง Admin (Bootstrap 5) — สำหรับทดสอบ header/footer</p>
-    </div>
+    <p class="text-muted">หน้านี้ใช้ layout ฝั่ง Admin (AdminLTE v4 + Bootstrap 5) — สำหรับทดสอบ sidebar/header/footer</p>
 @endsection

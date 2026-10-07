@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -89,9 +90,7 @@ Route::get('/lang/{locale}', function (string $locale) {
 |
 */
 Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.home');
-    })->name('admin.home');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
     Route::get('permission',[PermissionController::class, 'index'])->name('admin.permission');
 });
