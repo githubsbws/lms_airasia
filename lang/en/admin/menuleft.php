@@ -19,6 +19,7 @@ return [
     'how_to' => 'How To',
     'faq' => 'FAQ',
     'permission' => 'Permission',
+    'admin_group' => 'Add admin group',
     'document' => 'Document',
     'vdo' => 'VDO',
     'advertise_image' => 'Advertise Image',

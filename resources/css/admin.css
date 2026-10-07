@@ -26,8 +26,25 @@
     padding-bottom: 0.5rem;
 }
 
+/*
+ * icon กับลูกศร (.nav-arrow) ทั้งคู่มีความสูงคงที่เท่ากันเสมอ (เป็นไอคอน
+ * ขนาดเดียวกัน ไม่ขึ้นกับว่าข้อความข้างๆจะ wrap กี่บรรทัด) จึงจัดให้อยู่
+ * "คนละฝั่ง" ของ .nav-link โดยตรง (ไม่ใช่ลูกของ <p>) แล้ว align-items:
+ * flex-start ของ .nav-link ทำให้ทั้งคู่เกาะขอบบนเดียวกันเป๊ะเสมอ —
+ * วิธีนี้แม่นยำกว่าการพยายาม center เทียบกับ <p> ที่ความสูงไม่คงที่
+ * (เพราะ badge + ข้อความยาวจน wrap 2 บรรทัดในภาษาไทย)
+ */
 .sidebar-menu .nav-link > .nav-icon {
-    margin-top: 0.15rem;
+    align-self: center;
+}
+
+/*
+ * AdminLTE ตั้ง white-space: nowrap ไว้ที่ .sidebar-menu .nav-link
+ * (ตัว <a> เอง) ซึ่งอาจกระทบการคำนวณความสูงของ <p> ลูกตอน wrap ภาษาไทย
+ * vs อังกฤษ ต่างกัน ต้อง override ที่ตัว <a> นี้ด้วย ไม่ใช่แค่ที่ <p>
+ */
+.sidebar-menu .nav-link {
+    white-space: normal;
 }
 
 .sidebar-menu .nav-link > p {
@@ -47,22 +64,22 @@
 .sidebar-menu .nav-link > p > .menu-label-text {
     flex: 1 1 auto;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 }
 
-/*
- * ลูกศร treeview: เอาออกจาก absolute positioning เดิมของ AdminLTE
- * (ซึ่งอิง top คงที่เทียบกับความสูงทั้งก้อนของ <p> ทำให้ลอยสูงเกินไป
- * เมื่อข้อความยาวจน wrap 2 บรรทัด) ให้เป็น flex item ของตัวเอง align
- * center เทียบกับความสูงของตัวมันเอง (บรรทัดเดียว) จึงอยู่กึ่งกลาง
- * ของบรรทัดแรกเสมอไม่ว่าข้อความจะยาวกี่บรรทัด
- */
+/* ลูกศร treeview: ขนาดเท่ากับ font-size ข้อความ (14px) และ center
+   เทียบกับ .menu-label-text (sibling ข้างๆ) โดยตรง ไม่ใช่เทียบกับ <p>
+   ทั้งก้อน เพื่อตัดปัญหาความสูงของ <p> ที่คำนวณไม่ตรงกันระหว่างภาษา */
 .sidebar-menu .nav-link > p > .nav-arrow {
     position: static;
     margin-left: 0.5rem;
     flex-shrink: 0;
     align-self: center;
     transform: none;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
 }
 
 /*

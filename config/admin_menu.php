@@ -133,6 +133,10 @@ return [
         'key' => 'permission',
         'icon' => 'bi-shield-lock-fill',
         'route' => null,
+        'children' => [
+            ['key' => 'admin_group', 'route' => 'admin.permission.group'],
+            ['key' => 'admin_permission_menu', 'route' => null],
+        ],
     ],
 
     [

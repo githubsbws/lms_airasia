@@ -92,5 +92,5 @@ Route::get('/lang/{locale}', function (string $locale) {
 Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
-    Route::get('permission',[PermissionController::class, 'index'])->name('admin.permission');
+    Route::get('permission/group',[PermissionController::class, 'adminGroup'])->name('admin.permission.group');
 });

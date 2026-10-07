@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
-    public function index()
+    public function adminGroup()
     {
-
+        return view('admin.permission.permission-group');
     }
 }

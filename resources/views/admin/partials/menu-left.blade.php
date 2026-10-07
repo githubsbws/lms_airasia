@@ -32,10 +32,17 @@
                         $hasChildren = ! empty($item['children']);
                         $label = __('admin/menuleft.'.$item['key']);
                         $isActive = ! empty($item['route']) && request()->routeIs($item['route']);
+
+                        // เมนูมี children: ถือว่า "active/เปิดไว้" ถ้า route ปัจจุบันตรงกับ
+                        // child ตัวไหนตัวหนึ่ง — ใช้ class menu-open ของ AdminLTE เพื่อให้
+                        // sub-menu แสดงอยู่ (ไม่ซ่อน) และ parent link ไฮไลต์ตามไปด้วย
+                        $hasActiveChild = $hasChildren && collect($item['children'])
+                            ->contains(fn ($child) => ! empty($child['route']) && request()->routeIs($child['route']));
+
                         $href = ! empty($item['route']) ? route($item['route']) : '#';
                     @endphp
 
-                    <li class="nav-item {{ $hasChildren ? '' : '' }}">
+                    <li class="nav-item {{ $hasActiveChild ? 'menu-open' : '' }}">
 
                         <a href="{{ $href }}" class="nav-link {{ $isActive ? 'active' : '' }}">
                             <i class="nav-icon {{ $item['icon'] ?? 'bi-dot' }}"></i>
@@ -62,7 +69,6 @@
                                     @endphp
                                     <li class="nav-item">
                                         <a href="{{ $childHref }}" class="nav-link {{ $childActive ? 'active' : '' }}">
-                                            <i class="nav-icon bi bi-circle"></i>
                                             <p>{{ $childLabel }}</p>
                                         </a>
                                     </li>
