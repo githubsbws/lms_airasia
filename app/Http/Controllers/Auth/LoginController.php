@@ -27,7 +27,7 @@ class LoginController extends Controller
 
         $user = Users::where('username', $credentials['username'])->first();
 
-        if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+        if (! $user || ! $this->checkPassword($user, $credentials['password'])) {
             throw ValidationException::withMessages([
                 'username' => __('auth.failed'),
             ]);
@@ -52,6 +52,39 @@ class LoginController extends Controller
         $user->forceFill(['lastvisit_at' => now()])->save();
 
         return redirect()->intended(route('home'));
+    }
+
+    /**
+     * ตรวจสอบรหัสผ่าน รองรับข้อมูลเก่าที่เก็บเป็น MD5 (migrate มาจากระบบเดิม)
+     *
+     * ถ้ารหัสผ่านที่เก็บไว้เป็นรูปแบบ MD5 (hex 32 ตัวอักษร) และตรงกับที่ผู้ใช้กรอก
+     * จะอัปเกรดเป็น Laravel hash (bcrypt) ทันทีแล้วบันทึกทับของเดิม
+     * ถ้าไม่ใช่ MD5 ก็ตรวจสอบด้วย Hash::check ตามปกติ
+     */
+    private function checkPassword(Users $user, string $plainPassword): bool
+    {
+        $storedPassword = $user->password;
+
+        if ($this->isMd5Hash($storedPassword)) {
+            if (! hash_equals($storedPassword, md5($plainPassword))) {
+                return false;
+            }
+
+            // รหัสผ่านถูกต้อง (ตรวจผ่าน MD5) — อัปเกรดเป็น Laravel hash แล้วบันทึกทับ
+            $user->forceFill(['password' => $plainPassword])->save();
+
+            return true;
+        }
+
+        return Hash::check($plainPassword, $storedPassword);
+    }
+
+    /**
+     * ตรวจว่า string เป็นรูปแบบ MD5 hash หรือไม่ (hex 32 ตัวอักษรล้วน)
+     */
+    private function isMd5Hash(string $value): bool
+    {
+        return (bool) preg_match('/^[a-f0-9]{32}$/i', $value);
     }
 
     public function logout(Request $request): RedirectResponse
