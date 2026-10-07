@@ -144,6 +144,7 @@
                 </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{-- footer ซ่อนไว้ โผล่มาพร้อมฟอร์ม --}}
                 <div class="collapse outsider-collapse {{ $errors->any() ? 'show' : '' }}">
                     <div class="modal-footer">
