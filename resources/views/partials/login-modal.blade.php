@@ -143,12 +143,29 @@
                     </div>
                 </div>
 
+<<<<<<< HEAD
                 {{-- footer ซ่อนไว้ โผล่มาพร้อมฟอร์ม --}}
                 <div class="collapse outsider-collapse {{ $errors->any() ? 'show' : '' }}">
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-login-submit">
                             {{ __('auth.submit') }}
                         </button>
+=======
+                {{-- Login ปกติ: username/password --}}
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">{{ __('auth.username') }}</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            value="{{ old('username') }}"
+                            required
+                            autofocus>
+>>>>>>> 1c93a9ff0b90ccf123dbe8fe4a06648498b50735
                     </div>
                 </div>
 
@@ -165,4 +182,3 @@
         });
     </script>
 @endif
-
