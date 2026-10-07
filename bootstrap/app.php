@@ -19,7 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'checkIdleTimeout' => \App\Http\Middleware\CheckIdleTimeout::class,
+            'ensureIsAdmin' => \App\Http\Middleware\EnsureIsAdmin::class,
         ]);
+
+        // ยังไม่มีหน้า login แยก (ใช้ modal ที่ header) — ถ้า guest เข้าหน้าที่ต้อง login
+        // (เช่น /admin/*) ให้เด้งไปหน้าแรกแทนปลายทาง default ('login' route ที่ไม่มีจริง)
+        $middleware->redirectGuestsTo(fn () => route('home'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -87,8 +88,10 @@ Route::get('/lang/{locale}', function (string $locale) {
 | แทนที่ด้วย Filament ที่ mount /admin เอง (ดู design.md หัวข้อ 1)
 |
 */
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function () {
     Route::get('/', function () {
         return view('admin.home');
     })->name('admin.home');
+
+    Route::get('permission',[PermissionController::class, 'index'])->name('admin.permission');
 });

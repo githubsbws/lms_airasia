@@ -26,6 +26,8 @@
 
                 @foreach (config('admin_menu', []) as $item)
 
+                    @continue(! empty($item['id']) && ! \App\Helpers\PermissionHelper::canMenu($item['id']))
+
                     @php
                         $hasChildren = ! empty($item['children']);
                         $label = __('admin/menuleft.'.$item['key']);
@@ -38,7 +40,12 @@
                         <a href="{{ $href }}" class="nav-link {{ $isActive ? 'active' : '' }}">
                             <i class="nav-icon {{ $item['icon'] ?? 'bi-dot' }}"></i>
                             <p>
-                                {{ $label }}
+                                <span class="menu-label-text">
+                                    @if (! empty($item['badge']))
+                                        <span class="menu-step-badge">{{ $item['badge'] }}</span>
+                                    @endif
+                                    {{ $label }}
+                                </span>
                                 @if ($hasChildren)
                                     <i class="nav-arrow bi bi-chevron-right"></i>
                                 @endif
