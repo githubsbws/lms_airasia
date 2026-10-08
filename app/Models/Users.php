@@ -20,8 +20,8 @@ class Users extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'email',
         'password',
+        'email',
         'org_id', 'pic_user', 'department_id', 'activkey','lastvisit_at', 'superuser', 'status', 'online_status', 'online_user',
         'group_id', 'del_status'
     ];
@@ -46,5 +46,13 @@ class Users extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Profile ของ user คนนี้ (ความสัมพันธ์ 1:1 — profiles.user_id เป็นทั้ง PK และ FK)
+     */
+    public function profile()
+    {
+        return $this->hasOne(Profiles::class, 'user_id', 'id');
     }
 }

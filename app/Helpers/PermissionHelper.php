@@ -55,7 +55,7 @@ class PermissionHelper
 
         if (is_null(self::$allowedMenuIds)) {
             self::$allowedMenuIds = Permission::where('group_id', $groupId)
-                ->where('active', 1)
+                ->where('active', 'y')
                 ->pluck('admin_menu_id')
                 ->map(fn ($id) => (int) $id)
                 ->all();

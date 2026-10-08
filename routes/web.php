@@ -92,5 +92,11 @@ Route::get('/lang/{locale}', function (string $locale) {
 Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.home');
 
-    Route::get('permission/group',[PermissionController::class, 'adminGroup'])->name('admin.permission.group');
+    Route::get('permission/group', [PermissionController::class, 'adminGroup'])->name('admin.permission.group');
+    Route::post('permission/group', [PermissionController::class, 'storeAdminGroup'])->name('admin.permission.group.store');
+    Route::put('permission/group/{adminGroup}', [PermissionController::class, 'updateAdminGroup'])->name('admin.permission.group.update');
+    Route::delete('permission/group/{adminGroup}', [PermissionController::class, 'destroyAdminGroup'])->name('admin.permission.group.destroy');
+
+    Route::get('permission/group/{adminGroup}/edit', [PermissionController::class, 'editAdminGroup'])->name('admin.permission.group.edit');
+    Route::put('permission/group/{adminGroup}/permission', [PermissionController::class, 'updateAdminGroupPermission'])->name('admin.permission.group.permission.update');
 });
