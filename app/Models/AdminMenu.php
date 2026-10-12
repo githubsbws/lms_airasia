@@ -36,7 +36,7 @@ class AdminMenu extends Model
     }
 
     /**
-     * ไล่หา key ของเมนูนี้ใน config/admin_menu.php (รวมเมนูลูกใน children ด้วย)
+     * ไล่หา key ของเมนูนี้ใน config/admin_menu.php
      * โดยเทียบจาก id ที่ตรงกับ admin_menu.id ของ record นี้
      */
     protected function findMenuKey(): ?string

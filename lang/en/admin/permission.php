@@ -15,4 +15,9 @@ return [
     'select_menu_hint' => 'Select menus to grant',
     'select_column' => 'Select',
     'main_menu_column' => 'Select All',
+    'permission_group_name' => 'Permission Level',
+    'confirm_cancel_permission' => 'Confirm Cancel Permission',
+    'confirm_cancel_permission_message' => 'Are you sure you want to cancel this user\'s admin permission?',
+    'cancel_permission' => 'Cancel Permission',
+    'no_group' => 'No Group',
 ];

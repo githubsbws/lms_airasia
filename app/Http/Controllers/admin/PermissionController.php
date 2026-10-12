@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Models\AdminGroup;
 use App\Models\AdminMenu;
 use App\Models\Permission;
+use App\Models\Users;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -130,5 +131,42 @@ class PermissionController extends Controller
         return redirect()
             ->route('admin.permission.group')
             ->with('success', __('admin/common.delete').' '.__('admin/menuleft.admin_group').' '.__('admin/common.save'));
+    }
+
+    /**
+     * รายชื่อผู้ดูแลระบบ — ส่ง data ตรงเข้า view ให้ Tabulator ใช้เลย
+     * (ไม่ต้องมี JSON endpoint แยก เพราะข้อมูลไม่ได้เยอะจนต้อง paginate ฝั่ง server)
+     */
+    public function adminUser()
+    {
+        $adminUsers = Users::with('profile')
+            ->where('del_status', '0')
+            ->whereNotNull('group')
+            ->orderBy('id')
+            ->get()
+            ->map(fn (Users $user) => [
+                'id' => $user->id,
+                'fullname' => trim(($user->profile->firstname ?? '').' '.($user->profile->lastname ?? '')) ?: null,
+                'email' => $user->email,
+                'group_name' => $user->group_name,
+            ]);
+
+        return view('admin.permission.permission-user', compact('adminUsers'));
+    }
+
+    /**
+     * ยกเลิกสิทธิ์ผู้ดูแลระบบของ user คนนี้ — ไม่ลบ user ทิ้ง
+     * แค่ปรับ superuser = 0 และ group = null (ตามที่ตกลงไว้)
+     */
+    public function cancelAdminUserPermission(Users $user): RedirectResponse
+    {
+        $user->update([
+            'superuser' => 0,
+            'group' => null,
+        ]);
+
+        return redirect()
+            ->route('admin.permission.user')
+            ->with('success', __('admin/common.save'));
     }
 }

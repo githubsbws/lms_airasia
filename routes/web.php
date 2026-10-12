@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\UserManageController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -91,7 +92,7 @@ Route::get('/lang/{locale}', function (string $locale) {
 */
 Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.home');
-
+    //permission
     Route::get('permission/group', [PermissionController::class, 'adminGroup'])->name('admin.permission.group');
     Route::post('permission/group', [PermissionController::class, 'storeAdminGroup'])->name('admin.permission.group.store');
     Route::put('permission/group/{adminGroup}', [PermissionController::class, 'updateAdminGroup'])->name('admin.permission.group.update');
@@ -99,4 +100,10 @@ Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function ()
 
     Route::get('permission/group/{adminGroup}/edit', [PermissionController::class, 'editAdminGroup'])->name('admin.permission.group.edit');
     Route::put('permission/group/{adminGroup}/permission', [PermissionController::class, 'updateAdminGroupPermission'])->name('admin.permission.group.permission.update');
+
+    Route::get('permission/user', [PermissionController::class, 'adminUser'])->name('admin.permission.user');
+    Route::put('permission/user/{user}/cancel', [PermissionController::class, 'cancelAdminUserPermission'])->name('admin.permission.user.cancel');
+
+    //user manage
+    Route::get('user/manage', [UserManageController::class, 'userManage'])->name('admin.user.manage');
 });

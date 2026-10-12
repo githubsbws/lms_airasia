@@ -22,4 +22,6 @@ return [
     'back' => 'Back',
     'select_all' => 'Select All',
     'menu_name' => 'Menu Name',
+    'fullname' => 'Full Name',
+    'search_placeholder' => 'Search...',
 ];

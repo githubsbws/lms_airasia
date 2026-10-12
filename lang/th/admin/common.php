@@ -22,4 +22,6 @@ return [
     'back' => 'กลับ',
     'select_all' => 'เลือกทั้งหมด',
     'menu_name' => 'ชื่อเมนู',
+    'fullname' => 'ชื่อ-นามสกุล',
+    'search_placeholder' => 'ค้นหา...',
 ];

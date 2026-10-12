@@ -15,4 +15,9 @@ return [
     'select_menu_hint' => 'เลือกเมนูที่ต้องการให้สิทธิ์',
     'select_column' => 'เลือก',
     'main_menu_column' => 'เลือกทั้งหมด',
+    'permission_group_name' => 'ระดับสิทธิ์',
+    'confirm_cancel_permission' => 'ยืนยันการยกเลิกสิทธิ์',
+    'confirm_cancel_permission_message' => 'คุณแน่ใจหรือไม่ว่าต้องการยกเลิกสิทธิ์ผู้ดูแลระบบของผู้ใช้นี้',
+    'cancel_permission' => 'ยกเลิกสิทธิ์',
+    'no_group' => 'ไม่มีกลุ่มสิทธิ์',
 ];

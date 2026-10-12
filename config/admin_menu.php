@@ -135,7 +135,7 @@ return [
         'route' => null,
         'children' => [
             ['key' => 'admin_group', 'route' => 'admin.permission.group'],
-            ['key' => 'admin_permission_menu', 'route' => null],
+            ['key' => 'admin_user', 'route' => 'admin.permission.user'],
         ],
     ],
 
@@ -179,6 +179,9 @@ return [
         'key' => 'member_management',
         'icon' => 'bi-people-fill',
         'route' => null,
+        'children' => [
+            ['key' => 'admin_user_manage', 'route' => 'admin.user.manage'],
+        ],
     ],
 
     [

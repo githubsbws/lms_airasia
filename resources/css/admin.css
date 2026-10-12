@@ -8,6 +8,7 @@
  */
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'admin-lte/dist/css/adminlte.css';
+@import 'tabulator-tables/dist/css/tabulator_bootstrap5.min.css';
 
 /*
  * เมนูซ้ายบางรายการมีชื่อยาว (แปลจาก lang/{locale}/admin/menuleft.php)
