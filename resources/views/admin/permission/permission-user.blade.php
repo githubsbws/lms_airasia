@@ -59,7 +59,15 @@
             paginationSize: 10,
             placeholder: @json(__('admin/common.no_data')),
             columns: [
-                { title: @json(__('admin/common.no')), formatter: 'rownum', width: 70, hozAlign: 'center', headerSort: false },
+                {
+                    // เลขลำดับรันต่อเนื่องข้ามหน้า (หน้า 1 = 1-10, หน้า 2 = 11-20, ...)
+                    // ต่างจาก formatter: 'rownum' ที่นับใหม่ 1 ทุกหน้า
+                    title: @json(__('admin/common.no')),
+                    width: 70,
+                    hozAlign: 'center',
+                    headerSort: false,
+                    formatter: (cell) => (table.getPage() - 1) * table.getPageSize() + cell.getRow().getPosition(),
+                },
                 { title: @json(__('admin/common.fullname')), field: 'fullname', formatter: (cell) => cell.getValue() ?? '-' },
                 { title: 'Email', field: 'email' },
                 { title: @json(__('admin/permission.permission_group_name')), field: 'group_name', formatter: (cell) => cell.getValue() ?? @json(__('admin/permission.no_group')) },

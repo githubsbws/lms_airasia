@@ -23,7 +23,7 @@ class Users extends Authenticatable
         'password',
         'email',
         'org_id', 'pic_user', 'department_id', 'activkey','lastvisit_at', 'superuser', 'status', 'online_status', 'online_user',
-        'group', 'del_status'
+        'group', 'del_status','_token'
     ];
 
     /**

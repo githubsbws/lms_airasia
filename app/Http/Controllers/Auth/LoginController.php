@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -49,7 +50,18 @@ class LoginController extends Controller
 
         $request->session()->regenerate();
 
-        $user->forceFill(['lastvisit_at' => now()])->save();
+        // สร้าง token ใหม่ทุกครั้งที่ login สำเร็จ แล้วเก็บลง session ของ
+        // request นี้ด้วย — ถ้ามีการ login บัญชีเดียวกันจากเครื่องอื่นอีกครั้ง
+        // _token ใน DB จะถูกเขียนทับ ทำให้ token ใน session เครื่องเก่าไม่ตรง
+        // กับ DB อีกต่อไป (เช็คผ่าน middleware EnsureSingleSession ทุก request)
+        $sessionToken = Str::random(60);
+
+        $user->forceFill([
+            'lastvisit_at' => now(),
+            '_token' => $sessionToken,
+        ])->save();
+
+        $request->session()->put('session_token', $sessionToken);
 
         return redirect()->intended(route('home'));
     }

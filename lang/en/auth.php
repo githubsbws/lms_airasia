@@ -13,6 +13,7 @@ return [
     'submit' => 'Login',
     'logout' => 'Logout',
     'idle_timeout' => 'Your session has expired due to inactivity. Please login again.',
+    'session_replaced' => 'This account was signed in from another device. You have been logged out automatically.',
     'staff_section'    => 'Login for AirAsia Staff',
     'staff_button'     => 'For AirAsia Staff',
     'outsider_section' => 'Login for External Users',
