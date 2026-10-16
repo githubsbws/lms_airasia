@@ -20,4 +20,7 @@ return [
     'confirm_cancel_permission_message' => 'คุณแน่ใจหรือไม่ว่าต้องการยกเลิกสิทธิ์ผู้ดูแลระบบของผู้ใช้นี้',
     'cancel_permission' => 'ยกเลิกสิทธิ์',
     'no_group' => 'ไม่มีกลุ่มสิทธิ์',
+
+    'permission_manage' => 'จัดการสิทธิ์',
+    'permission_abort' => 'ยกเลิกสิทธิ์',
 ];

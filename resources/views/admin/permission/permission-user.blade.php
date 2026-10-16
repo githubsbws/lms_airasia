@@ -66,7 +66,7 @@
                     width: 70,
                     hozAlign: 'center',
                     headerSort: false,
-                    formatter: (cell) => (table.getPage() - 1) * table.getPageSize() + cell.getRow().getPosition(),
+                    formatter: (cell) => (table.getPage() - 1) * table.getPageSize() + cell.getRow().getPosition(true),
                 },
                 { title: @json(__('admin/common.fullname')), field: 'fullname', formatter: (cell) => cell.getValue() ?? '-' },
                 { title: 'Email', field: 'email' },

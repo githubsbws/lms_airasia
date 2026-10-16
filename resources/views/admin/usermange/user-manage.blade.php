@@ -22,7 +22,7 @@
                 <div class="mb-2 d-flex justify-content-end">
                     <input
                         type="text"
-                        id="adminUserSearch"
+                        id="userManageSearch"
                         class="form-control"
                         style="max-width: 260px;"
                         placeholder="{{ __('admin/common.search_placeholder') }}">
@@ -64,13 +64,13 @@
                     width: 70,
                     hozAlign: 'center',
                     headerSort: false,
-                    formatter: (cell) => (table.getPage() - 1) * table.getPageSize() + cell.getRow().getPosition(),
+                    formatter: (cell) => (table.getPage() - 1) * table.getPageSize() + cell.getRow().getPosition(true),
                 },
                 { title: @json(__('admin/common.fullname')), field: 'fullname', formatter: (cell) => cell.getValue() ?? '-' },
                 { title: 'Email', field: 'email' },
-                // { title: @json(__('admin/permission.permission_group_name')), field: 'group_name', formatter: (cell) => cell.getValue() ?? @json(__('admin/permission.no_group')) },
+                { title: @json(__('admin/permission.permission_manage')) },
                 {
-                    // title: @json(__('admin/permission.cancel_permission')),
+                    title: @json(__('admin/permission.permission_abort')),
                     // hozAlign: 'center',
                     // headerSort: false,
                     // formatter: () => '<button type="button" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>',
@@ -83,7 +83,7 @@
         });
 
         // ช่อง search เดียว ค้นทุกคอลัมน์พร้อมกัน (เหมือน DataTables global search)
-        document.getElementById('userManageTable').addEventListener('input', function (e) {
+        document.getElementById('userManageSearch').addEventListener('input', function (e) {
             const keyword = e.target.value.toLowerCase();
 
             table.setFilter((row) => {

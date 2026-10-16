@@ -20,4 +20,7 @@ return [
     'confirm_cancel_permission_message' => 'Are you sure you want to cancel this user\'s admin permission?',
     'cancel_permission' => 'Cancel Permission',
     'no_group' => 'No Group',
+
+    'permission_manage' => 'Permission Manage',
+    'permission_abort' => 'Permission_Abort',
 ];

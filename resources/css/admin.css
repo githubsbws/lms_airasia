@@ -84,6 +84,39 @@
 }
 
 /*
+ * หัวตาราง Tabulator (ใช้ร่วมกันทุกหน้าที่มีตาราง เช่น user-manage,
+ * permission-user) — พื้นหลังแดง ตัวหนังสือขาว ให้ดูเด่นแยกจากแถวข้อมูล
+ * ต้อง override ทั้ง .tabulator-header และ .tabulator-col (ตัวเซลล์
+ * หัวแต่ละคอลัมน์) เพราะ theme เดิมตั้งพื้นหลังสีขาวไว้ที่ .tabulator-col
+ * ซ้ำอีกชั้น ทับพื้นหลังของ .tabulator-header อยู่
+ */
+.tabulator .tabulator-header,
+.tabulator .tabulator-header .tabulator-col {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/*
+ * theme เดิมเปลี่ยนพื้นหลังเป็นเทา/ขาวตอน hover คอลัมน์ที่ sort ได้
+ * (.tabulator-col-sorter-element:hover) ทับสีแดงของเราไป ต้อง override
+ * เพิ่มเพราะ :hover พวกนี้มี specificity เท่ากับกฎข้างบน
+ */
+.tabulator .tabulator-header .tabulator-col.tabulator-col-sorter-element:hover,
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* ลูกศร sort เดิมเป็นสีเทา (#bbb) มองไม่เห็นบนพื้นแดง ปรับให้ขาวจางๆ */
+.tabulator .tabulator-header .tabulator-col-sorter .tabulator-arrow {
+    border-bottom-color: #fff;
+}
+
+.tabulator .tabulator-header .tabulator-col-sorter.tabulator-col-sorter-element .tabulator-arrow:hover {
+    border-bottom-color: #e9ecef;
+}
+
+/*
  * Badge ลำดับขั้นตอนของเมนู (ใช้กับกลุ่มเมนู catagory → course → lesson →
  * exam → training_evaluate เพื่อบอก user ว่าต้องทำตามลำดับ 1-5)
  * มาจาก config/admin_menu.php key 'badge' — render เฉพาะเมนูที่ตั้งค่าไว้
