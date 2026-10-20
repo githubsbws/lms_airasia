@@ -49,6 +49,20 @@
     //     form.submit();
     // }
 
+    // ปุ่มลบ user — ยืนยันก่อน แล้ว submit form ไป route destroy (DELETE)
+    function deleteUser(userId, fullname) {
+        if (! confirm(@json(__('admin/common.confirm_delete_message')) + '\n' + fullname)) {
+            return;
+        }
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '{{ url('admin/user/manage') }}/' + userId;
+        form.innerHTML = '@csrf @method('DELETE')';
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     function initUserManageTable() {
         const table = new Tabulator('#userManageTable', {
             data: @json($userMembers),
@@ -83,13 +97,29 @@
                 },
                 {
                     title: @json(__('admin/common.manage')),
-                    // hozAlign: 'center',
-                    // headerSort: false,
-                    // formatter: () => '<button type="button" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>',
-                    // cellClick: (e, cell) => {
-                    //     const row = cell.getRow().getData();
-                    //     cancelPermission(row.id, row.fullname ?? row.email);
-                    // },
+                    headerSort: false,
+                    width: 150,
+                    formatter: () => `
+                        <button type="button" class="btn btn-sm btn-info text-white view-btn" title="${@json(__('admin/common.view'))}"><i class="bi bi-eye"></i></button>
+                        <button type="button" class="btn btn-sm btn-warning edit-btn" title="${@json(__('admin/common.edit'))}"><i class="bi bi-pencil"></i></button>
+                        <button type="button" class="btn btn-sm btn-danger delete-btn" title="${@json(__('admin/common.delete'))}"><i class="bi bi-trash"></i></button>
+                    `,
+                    cellClick: (e, cell) => {
+                        const row = cell.getRow().getData();
+                        const target = e.target.closest('button');
+
+                        if (! target) {
+                            return;
+                        }
+
+                        if (target.classList.contains('view-btn')) {
+                            window.location.href = '{{ url('admin/user/manage') }}/' + row.id;
+                        } else if (target.classList.contains('edit-btn')) {
+                            window.location.href = '{{ url('admin/user/manage') }}/' + row.id + '/edit';
+                        } else if (target.classList.contains('delete-btn')) {
+                            deleteUser(row.id, row.fullname ?? row.email);
+                        }
+                    },
                 },
             ],
         });

@@ -87,6 +87,27 @@ Component ที่ใช้ซ้ำทำเป็น Blade component (`<x-cou
 - Auth ผ่าน Laravel Sanctum
 - Versioning: `/api/v1/...`
 
+## 6.1 Controller vs Service Layer — เกณฑ์การแยก
+
+**หลักการ:** เริ่มเขียน business logic ไว้ใน Controller ตรงๆก่อนเสมอ (ไม่ต้องสร้าง
+Service class ล่วงหน้าแบบเผื่อไว้) ย้ายไปทำใน Service layer (`app/Services/`)
+เมื่อเจอสัญญาณใดสัญญาณหนึ่งต่อไปนี้:
+
+- **Logic ถูกเรียกซ้ำจาก 2+ จุด** (เช่น ต้องเรียกจากทั้งหน้า admin และ API
+  endpoint แยก หรือจาก queue job) — ย้ายไป Service กันโค้ดซ้ำ
+- **Method ยาวเกิน ~30-40 บรรทัด** หรือมี `if/else`/`switch` ซ้อนหลายชั้น
+  เพื่อตัดสินใจ business rule
+- **ต้องทำ transaction รวมหลาย model** แบบ atomic (เช่น ลบ user ต้องลบ
+  permission + profile + activity log พร้อมกัน ถ้าพังต้อง rollback ทั้งหมด)
+- **ต้องการ unit test logic แยกจาก HTTP layer** (test ได้โดยไม่ต้องยิง
+  request/response จำลอง)
+- Controller เริ่ม "รก" — มี private method ย่อยหลายตัวที่ไม่เกี่ยวกับการแปลง
+  request/response แต่เป็น business rule ล้วนๆ
+
+**ถ้ายังไม่เจอสัญญาณเหล่านี้:** ให้คงไว้ใน Controller ตรงๆ เพราะเพิ่ม Service
+layer ก่อนจำเป็นจะเพิ่ม indirection โดยไม่ได้ผลตอบแทน (ต้องกระโดดไปดูอีกไฟล์
+ทุกครั้งที่อ่านโค้ด ทั้งที่ logic สั้นและใช้ครั้งเดียว)
+
 ## 7. Deployment Topology
 
 - Web/Apache: หลาย vhost, PHP 7.4/8.3/8.4/8.5 แยก socket ต่อไซต์ — โปรเจกต์นี้ใช้ php8.5-fpm.sock

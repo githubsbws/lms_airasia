@@ -108,4 +108,8 @@ Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function ()
     Route::get('user/manage', [UserManageController::class, 'userManage'])->name('admin.user.manage');
     Route::get('user/manage/{user}/permission', [UserManageController::class, 'editPermission'])->name('admin.user.manage.permission.edit');
     Route::put('user/manage/{user}/permission', [UserManageController::class, 'updatePermission'])->name('admin.user.manage.permission.update');
+    Route::get('user/manage/{user}', [UserManageController::class, 'show'])->name('admin.user.manage.show');
+    Route::get('user/manage/{user}/edit', [UserManageController::class, 'edit'])->name('admin.user.manage.edit');
+    Route::put('user/manage/{user}', [UserManageController::class, 'update'])->name('admin.user.manage.update');
+    Route::delete('user/manage/{user}', [UserManageController::class, 'destroy'])->name('admin.user.manage.destroy');
 });
