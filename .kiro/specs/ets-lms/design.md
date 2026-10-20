@@ -92,3 +92,29 @@ Component ที่ใช้ซ้ำทำเป็น Blade component (`<x-cou
 - Web/Apache: หลาย vhost, PHP 7.4/8.3/8.4/8.5 แยก socket ต่อไซต์ — โปรเจกต์นี้ใช้ php8.5-fpm.sock
 - DB server: PostgreSQL แยกเครื่อง, เปิด pg_hba.conf/firewall ให้ web server เข้าถึง
 - Git workflow: Dev PC → push Git → clone/pull UAT → composer install --no-dev → migrate → cache clear
+
+## 8. Known Issues / ค้างตัดสินใจ
+
+### 8.1 Authorization ของหน้าจัดการสิทธิ์ user รายคน (admin/user/manage/{user}/permission)
+
+**สถานะ:** ยังไม่แก้ — ตัดสินใจเลื่อนไว้ก่อน (2026-09)
+
+**ปัญหา:** `UserManageController::editPermission()` / `updatePermission()` ถูกครอบด้วย
+middleware `auth` + `ensureIsAdmin` เท่านั้น ซึ่งเช็คแค่ "เข้าโซน /admin ได้ไหม"
+(มี group_id หรือ superuser) ไม่ได้เช็คว่าผู้เรียกมีสิทธิ์แก้ไข `{user}` คนนั้นจริงหรือไม่
+เพราะ route parameter `{user}` รับ id ตรงจาก URL/ปุ่มในตาราง (Tabulator cellClick
+สร้าง URL จาก `row.id` ฝั่ง client) — admin ธรรมดาคนไหนก็ตามที่ผ่าน `ensureIsAdmin`
+สามารถแก้ URL เป็น id ของใครก็ได้ รวมถึง:
+
+- แก้ไข/ลดสิทธิ์ของ superuser หรือ admin คนอื่นที่ไม่ควรมีอำนาจแก้
+- ยกตัวเองเป็น group 1 (superuser) ได้ทันที เพราะ `updatePermission()` เซ็ต
+  `superuser = 1` อัตโนมัติถ้า `group == 1` โดยไม่เช็คว่าผู้ส่ง request เป็น
+  superuser อยู่แล้วหรือไม่ (privilege escalation)
+
+**ต้องตัดสินใจ:** ใครควรมีสิทธิ์เข้าหน้านี้ได้บ้าง — ตัวเลือกที่เสนอไว้:
+- (A) เฉพาะ superuser เท่านั้น (ปลอดภัยสุด แนะนำ)
+- (B) admin ทุกคนที่เข้าโซน `/admin` ได้ (พฤติกรรมปัจจุบัน แต่เสี่ยง privilege escalation)
+
+**ตำแหน่งโค้ดที่ต้องแก้เมื่อตัดสินใจแล้ว:**
+`app/Http/Controllers/admin/UserManageController.php` → `editPermission()`, `updatePermission()`
+(มี TODO comment ไว้ในโค้ดแล้วที่ `updatePermission()`)

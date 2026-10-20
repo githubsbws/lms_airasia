@@ -23,4 +23,6 @@ return [
 
     'permission_manage' => 'Permission Manage',
     'permission_abort' => 'Permission_Abort',
+
+    'user_privilage' => 'User Privilage',
 ];

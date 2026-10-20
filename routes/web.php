@@ -106,4 +106,6 @@ Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function ()
 
     //user manage
     Route::get('user/manage', [UserManageController::class, 'userManage'])->name('admin.user.manage');
+    Route::get('user/manage/{user}/permission', [UserManageController::class, 'editPermission'])->name('admin.user.manage.permission.edit');
+    Route::put('user/manage/{user}/permission', [UserManageController::class, 'updatePermission'])->name('admin.user.manage.permission.update');
 });

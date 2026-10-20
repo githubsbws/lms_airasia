@@ -23,4 +23,6 @@ return [
 
     'permission_manage' => 'จัดการสิทธิ์',
     'permission_abort' => 'ยกเลิกสิทธิ์',
+
+    'user_privilage' => 'สิทธิการใช้งาน',
 ];

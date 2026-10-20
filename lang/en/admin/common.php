@@ -24,4 +24,6 @@ return [
     'menu_name' => 'Menu Name',
     'fullname' => 'Full Name',
     'search_placeholder' => 'Search...',
+    'register_date' => 'Register Date',
+    'lastvisit_at' => 'Last Visit',
 ];

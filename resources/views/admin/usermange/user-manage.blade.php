@@ -68,9 +68,21 @@
                 },
                 { title: @json(__('admin/common.fullname')), field: 'fullname', formatter: (cell) => cell.getValue() ?? '-' },
                 { title: 'Email', field: 'email' },
-                { title: @json(__('admin/permission.permission_manage')) },
+                { title: @json(__('admin/common.register_date')), field: 'register_date' },
+                { title: @json(__('admin/common.lastvisit_at')), field: 'lastvisit_at' },
+                { title: @json(__('admin/permission.user_privilage')), field: 'privilage' },
+                // { title: @json(__('admin/common.status')), field: 'email' },
                 {
-                    title: @json(__('admin/permission.permission_abort')),
+                    title: @json(__('admin/permission.permission_manage')),
+                    headerSort: false,
+                    formatter: () => '<button type="button" class="btn btn-sm btn-primary"><i class="bi bi-person-add"></i></button>',
+                    cellClick: (e, cell) => {
+                        const row = cell.getRow().getData();
+                        window.location.href = '{{ url('admin/user/manage') }}/' + row.id + '/permission';
+                    },
+                },
+                {
+                    title: @json(__('admin/common.manage')),
                     // hozAlign: 'center',
                     // headerSort: false,
                     // formatter: () => '<button type="button" class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></button>',
