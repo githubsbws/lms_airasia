@@ -180,6 +180,9 @@ return [
         'icon' => 'bi-people-fill',
         'route' => null,
         'children' => [
+            ['key' => 'user_approve', 'route' => 'admin.user.manage'],
+            ['key' => 'user_add', 'route' => 'admin.user.manage'],
+            ['key' => 'user_add_excel', 'route' => 'admin.user.manage'],
             ['key' => 'admin_user_manage', 'route' => 'admin.user.manage'],
         ],
     ],

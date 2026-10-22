@@ -56,6 +56,7 @@ class Users extends Authenticatable
         return $this->hasOne(Profiles::class, 'user_id', 'id');
     }
 
+
     /**
      * ความสัมพันธ์ไปยัง AdminGroup ผ่าน column `group` ตรงๆ
      *
@@ -69,6 +70,21 @@ class Users extends Authenticatable
     public function groupName()
     {
         return $this->belongsTo(AdminGroup::class, 'group', 'id');
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function station()
+    {
+        return $this->belongsTo(Station::class, 'station_id', 'station_id');
     }
 
     /**
