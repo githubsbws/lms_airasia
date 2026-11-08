@@ -33,25 +33,31 @@
 
             <div class="manual-cards">
 
-                {{-- Admin Manual --}}
-                <a href="#" class="manual-card">
-                    <div class="manual-icon">
-                        <i class="bi bi-box-arrow-in-right"></i>
-                    </div>
-                    <p class="manual-card-title">
-                        สำหรับผู้ดูแลระบบ
+                @forelse ($howTos as $howTo)
+                    @if ($howTo->filename)
+                        <a href="{{ \Illuminate\Support\Facades\Storage::disk('public')->url('howto/'.$howTo->filename) }}" target="_blank" class="manual-card">
+                            <div class="manual-icon">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </div>
+                            <p class="manual-card-title">
+                                {{ $howTo->how_to_name }}
+                            </p>
+                        </a>
+                    @else
+                        <div class="manual-card disabled" aria-disabled="true" title="{{ __('home.how_to_file_unavailable') }}">
+                            <div class="manual-icon">
+                                <i class="bi bi-file-earmark-pdf"></i>
+                            </div>
+                            <p class="manual-card-title">
+                                {{ $howTo->how_to_name }}
+                            </p>
+                        </div>
+                    @endif
+                @empty
+                    <p class="text-center w-100">
+                        {{ __('home.how_to_no_data') }}
                     </p>
-                </a>
-
-                {{-- User Manual --}}
-                <a href="#" class="manual-card">
-                    <div class="manual-icon">
-                        <i class="bi bi-box-arrow-in-right"></i>
-                    </div>
-                    <p class="manual-card-title">
-                        สำหรับผู้ใช้งานทั่วไป
-                    </p>
-                </a>
+                @endforelse
 
             </div>
 

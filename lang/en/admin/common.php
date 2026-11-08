@@ -39,4 +39,6 @@ return [
     'org_group' => 'Group',
     'department' => 'Department',
     'station' => 'Station',
+    'created_at' => 'Created At',
+    'updated_at' => 'Updated At',
 ];

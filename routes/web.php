@@ -3,8 +3,14 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\UserManageController;
 use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\HowtoController;
+use App\Http\Controllers\admin\FaqController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HowToFrontController;
+use App\Http\Controllers\FaqFrontController;
 use Illuminate\Support\Facades\Route;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,13 +66,9 @@ Route::get('/document', function () {
     return view('frontend.document');
 })->name('document.index');
 
-Route::get('/how-to-use', function () {
-    return view('frontend.how-to-use');
-})->name('how-to-use');
+Route::get('/how-to-use', [HowToFrontController::class, 'index'])->name('how-to-use');
 
-Route::get('/faq', function () {
-    return view('frontend.faq');
-})->name('faq');
+Route::get('/faq', [FaqFrontController::class, 'index'])->name('faq');
 
 Route::get('/contact', function () {
     return view('frontend.contact');
@@ -112,4 +114,21 @@ Route::prefix('admin')->middleware(['auth', 'ensureIsAdmin'])->group(function ()
     Route::get('user/manage/{user}/edit', [UserManageController::class, 'edit'])->name('admin.user.manage.edit');
     Route::put('user/manage/{user}', [UserManageController::class, 'update'])->name('admin.user.manage.update');
     Route::delete('user/manage/{user}', [UserManageController::class, 'destroy'])->name('admin.user.manage.destroy');
+
+    //howto
+    Route::get('howto/create', [HowtoController::class, 'howtoCreate'])->name('admin.howto.create');
+    Route::post('howto/create', [HowtoController::class, 'store'])->name('admin.howto.store');
+    Route::get('howto/list', [HowtoController::class, 'howtoList'])->name('admin.howto.list');
+    Route::get('howto/{howTo}/edit', [HowtoController::class, 'edit'])->name('admin.howto.edit');
+    Route::put('howto/{howTo}', [HowtoController::class, 'update'])->name('admin.howto.update');
+    Route::delete('howto/{howTo}', [HowtoController::class, 'destroy'])->name('admin.howto.destroy');
+
+    //faq
+    Route::get('faq/create', [FaqController::class, 'faqCreate'])->name('admin.faq.create');
+    Route::post('faq/create', [FaqController::class, 'store'])->name('admin.faq.store');
+    Route::get('faq/list', [FaqController::class, 'faqList'])->name('admin.faq.list');
+    Route::get('faq/{faq}/edit', [FaqController::class, 'edit'])->name('admin.faq.edit');
+    Route::put('faq/{faq}', [FaqController::class, 'update'])->name('admin.faq.update');
+    Route::delete('faq/{faq}', [FaqController::class, 'destroy'])->name('admin.faq.destroy');
+
 });

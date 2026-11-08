@@ -119,6 +119,10 @@ return [
         'key' => 'how_to',
         'icon' => 'bi-question-circle-fill',
         'route' => null,
+        'children' => [
+            ['key' => 'how_to_create', 'route' => 'admin.howto.create'],
+            ['key' => 'how_to_list', 'route' => 'admin.howto.list'],
+        ],
     ],
 
     [
@@ -126,6 +130,10 @@ return [
         'key' => 'faq',
         'icon' => 'bi-patch-question-fill',
         'route' => null,
+        'children' => [
+            ['key' => 'faq_create', 'route' => 'admin.faq.create'],
+            ['key' => 'faq_list', 'route' => 'admin.faq.list'],
+        ],
     ],
 
     [

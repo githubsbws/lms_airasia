@@ -1608,6 +1608,17 @@ footer {
             box-shadow:
                 0 5px 15px rgba(0, 0, 0, 0.15);
 
+        }
+
+        .manual-card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .manual-card.disabled:hover {
+            transform: none;
+            box-shadow: none;
+
             color: #333333;
         }
 

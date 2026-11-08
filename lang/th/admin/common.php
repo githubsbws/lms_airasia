@@ -39,4 +39,6 @@ return [
     'org_group' => 'ฝ่าย',
     'department' => 'แผนก',
     'station' => 'สถานี',
+    'created_at' => 'วันที่สร้าง',
+    'updated_at' => 'วันที่แก้ไขล่าสุด',
 ];
